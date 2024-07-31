@@ -1,0 +1,97 @@
+.home-container {
+    padding: 20px;
+  }
+  
+  .hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  
+  .hero-text {
+    max-width: 600px;
+  }
+  
+  .hero-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .hero-text p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .team-section {
+    margin-bottom: 40px;
+  }
+  
+  .team-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .team-members {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .team-member {
+    text-align: center;
+    max-width: 300px;
+  }
+  
+  .team-member img {
+    /* width: 200px; */
+    height: 250px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .team-member h3 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+  
+  .team-member p {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  .commitment-section {
+    margin-bottom: 40px;
+  }
+  
+  .commitment-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .commitment-points {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .commitment-point {
+    text-align: center;
+    max-width: 300px;
+  }
+  
+  .commitment-point h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .commitment-point p {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  

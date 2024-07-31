@@ -1,0 +1,112 @@
+
+  .profile-management {
+    display: flex;
+    justify-content: space-between;
+    padding: 100px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    margin-top: 50px;
+  }
+  
+  .form-container,
+  .current-profile {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .form-container h2,
+  .current-profile h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .form-container p,
+  .current-profile p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .form-group {
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+    color: #333;
+  }
+  
+  .form-group textarea {
+    height: 100px;
+    resize: none;
+  }
+  
+  .user-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* button:hover {
+    background-color: #0056b3;
+  } */
+  
+  .current-profile {
+    margin-left: 20px;
+  }
+  
+  .profile-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .profile-details h3 {
+margin-top: 20px;
+margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .profile-details p {
+    margin: 20px 0;
+    color: #555;
+  }
+  
