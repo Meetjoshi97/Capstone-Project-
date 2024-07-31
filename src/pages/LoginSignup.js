@@ -41,7 +41,7 @@ const LoginSignup = () => {
     e.preventDefault();
     setError('');
 
-    const backend = 'http://localhost:5000';
+    const backend = 'https://capstone-project-shop-verse.onrender.com';
     const endpoint = `${backend}/api/auth/forgot-password`;
 
     try {
@@ -73,7 +73,7 @@ const LoginSignup = () => {
       return;
     }
 
-    const backend = 'http://localhost:5000';
+    const backend = 'https://capstone-project-shop-verse.onrender.com';
     const endpoint = isLogin ? `${backend}/api/auth/login` : `${backend}/api/auth/register`;
     const body = isLogin
       ? { email: formData.email, password: formData.password }

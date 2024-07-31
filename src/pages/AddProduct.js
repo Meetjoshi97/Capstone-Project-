@@ -22,7 +22,7 @@ const AddProduct = () => {
   }, []);
 
   const fetchProducts = async () => {
-    const response = await fetch('http://localhost:5000/api/products');
+    const response = await fetch('https://capstone-project-shop-verse.onrender.com/api/products');
     const data = await response.json();
     setProducts(data);
   };
@@ -44,7 +44,7 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEditing) {
-      await fetch(`http://localhost:5000/api/products/${currentProductId}`, {
+      await fetch(`https://capstone-project-shop-verse.onrender.com/api/products/${currentProductId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ const AddProduct = () => {
       });
       toast.success('Product updated successfully');
     } else {
-      await fetch('http://localhost:5000/api/products', {
+      await fetch('https://capstone-project-shop-verse.onrender.com/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const AddProduct = () => {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/api/products/${id}`, {
+    await fetch(`https://capstone-project-shop-verse.onrender.com/api/products/${id}`, {
       method: 'DELETE',
     });
     toast.success('Product deleted successfully');

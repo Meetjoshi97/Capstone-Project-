@@ -8,7 +8,7 @@ const ProductDetail = () => {
   const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/products/${id}`)
+    fetch(`https://capstone-project-shop-verse.onrender.com/api/products/${id}`)
       .then(response => response.json())
       .then(data => setProduct(data))
       .catch(error => console.error('Error fetching product:', error));

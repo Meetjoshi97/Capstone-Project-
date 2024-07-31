@@ -30,7 +30,7 @@ const UserPage = () => {
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/api/user/profile?email=${user.email}`)
+      fetch(`https://capstone-project-shop-verse.onrender.com/api/user/profile?email=${user.email}`)
         .then(response => response.json())
         .then(data => {
           if (data) {
@@ -50,7 +50,7 @@ const UserPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('http://localhost:5000/api/user/update', {
+    fetch('https://capstone-project-shop-verse.onrender.com/api/user/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

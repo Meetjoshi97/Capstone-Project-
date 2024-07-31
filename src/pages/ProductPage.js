@@ -16,7 +16,7 @@ const ProductPage = () => {
 
   const fetchProducts = async (searchTerm = '') => {
     try {
-      const response = await fetch(`http://localhost:5000/api/products?search=${searchTerm}`);
+      const response = await fetch(`https://capstone-project-shop-verse.onrender.com/api/products?search=${searchTerm}`);
       const data = await response.json();
       setProducts(data);
       setFilteredProducts(data);
