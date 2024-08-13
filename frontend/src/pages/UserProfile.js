@@ -50,7 +50,7 @@ const UserPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('http://localhost:5000/api/user/update', {
+    fetch('http://localhost:5000/api/user/updateUserProfile', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
