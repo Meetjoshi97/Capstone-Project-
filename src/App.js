@@ -9,11 +9,15 @@ import ContactUs from './pages/ContactUs';
 import AboutUs from './pages/AboutUs';
 import { AuthProvider } from './components/AuthContext';
 import { CartProvider } from './pages/CartContext';
-import UserPage from './pages/UserProfile';
+import UserProfile from './pages/UserProfile';
 import AddProduct from './pages/AddProduct';
 import ProductPage from './pages/ProductPage';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
+import OrderPage from './pages/OrderPage';
+import UserManagement from './pages/UserManagement';
+
+import AdminOrderPage from './pages/AdminOrderPage';
 
 const App = () => {
   return (
@@ -27,12 +31,16 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/LoginSignup" element={<LoginSignup />} />
                 <Route path="/contact" element={<ContactUs />} />
-                <Route path="/userProfile" element={<UserPage />} />
+                <Route path="/userProfile" element={<UserProfile />} />
                 <Route path="/aboutUs" element={<AboutUs />} />
                 <Route path="/addproducts" element={<AddProduct />} />
                 <Route path="/products" element={<ProductPage />} />
                 <Route path="/products/:id" element={<ProductDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order-summary" element={<OrderPage />} />
+                <Route path="/user-management" element={<UserManagement />} />
+                <Route path="/order-management" element={<AdminOrderPage />} />
+
               </Routes>
             </div>
             <Footer />

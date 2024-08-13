@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { CartContext } from './CartContext';
 
 const ProductPage = () => {
@@ -8,11 +8,13 @@ const ProductPage = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [noData, setNoData] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, cartItems } = useContext(CartContext);
 
   // Filter state
   const [priceFilter, setPriceFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
+
+  const location = useLocation();
 
   const fetchProducts = async (searchTerm = '') => {
     try {
@@ -27,8 +29,13 @@ const ProductPage = () => {
   };
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const category = params.get('category');
+    if (category) {
+      setCategoryFilter([category]);
+    }
     fetchProducts();
-  }, []);
+  }, [location]);
 
   useEffect(() => {
     let filtered = products;
@@ -80,10 +87,13 @@ const ProductPage = () => {
 
   const activeFiltersCount = priceFilter.length + categoryFilter.length;
 
+  const getCartQuantity = (productId) => {
+    const item = cartItems.find(item => item._id === productId);
+    return item ? item.quantity : 0;
+  };
+
   return (
     <div>
-      
-
       <label
         className="mx-auto mt-10 mb-6 relative bg-white min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300"
         htmlFor="search-bar"
@@ -181,7 +191,7 @@ const ProductPage = () => {
                     className="mr-2"
                     onChange={() => handleFilterChange('category', 'Electronics')}
                   />
-                Electronics
+                  Electronics
                 </label>
                 <label className="flex items-center">
                   <input
@@ -227,33 +237,37 @@ const ProductPage = () => {
         {noData ? (
           <div className="col-span-3 text-center text-gray-500">No data found</div>
         ) : (
-          filteredProducts.map(product => (
-            <div key={product._id} className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-              <Link to={`/products/${product._id}`}>
-                <img src={product.image} alt={product.name} className="h-80 w-72 object-cover rounded-t-xl" />
-                <div className="px-4 py-3 w-72">
-                  <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                  <p className="text-lg font-bold text-black truncate block capitalize">{product.name}</p>
-                  <div className="flex items-center">
-                    <p className="text-lg font-semibold text-black cursor-auto my-3">${product.price}</p>
-                    {product.originalPrice && (
-                      <del>
-                        <p className="text-sm text-gray-600 cursor-auto ml-2">${product.originalPrice}</p>
-                      </del>
-                    )}
-                    <div className="ml-auto">
-                      <button
-                        onClick={() => addToCart(product)}
-                        className="text-white addCart-button  px-3 py-1 rounded"
-                      >
-                        Add to Cart
-                      </button>
+          filteredProducts.map(product => {
+            const cartQuantity = getCartQuantity(product._id);
+            return (
+              <div key={product._id} className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+                <Link to={`/products/${product._id}`}>
+                  <img src={product.image} alt={product.name} className="h-80 w-72 object-cover rounded-t-xl" />
+                  <div className="px-4 py-3 w-72">
+                    <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
+                    <p className="text-lg font-bold text-black truncate block capitalize">{product.name}</p>
+                    <div className="flex items-center">
+                      <p className="text-lg font-semibold text-black cursor-auto my-3">${product.price}</p>
+                      {product.originalPrice && (
+                        <del>
+                          <p className="text-sm text-gray-600 cursor-auto ml-2">${product.originalPrice}</p>
+                        </del>
+                      )}
+                      <div className="ml-auto">
+                        <button
+                          onClick={() => addToCart(product)}
+                          className={`text-white addCart-button px-3 py-1 rounded ${cartQuantity >= product.inventory ? 'bg-gray-400 cursor-not-allowed' : 'addCart-button'}`}
+                          disabled={cartQuantity >= product.inventory || product.inventory === 0}
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </div>
-          ))
+                </Link>
+              </div>
+            );
+          })
         )}
       </section>
     </div>

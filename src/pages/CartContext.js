@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const CartContext = createContext();
 
@@ -8,9 +9,7 @@ export const CartProvider = ({ children }) => {
     return storedCartItems ? JSON.parse(storedCartItems) : [];
   });
 
-  // Save cart items to local storage whenever it changes
   useEffect(() => {
-    console.log('Cart items updated:', cartItems);
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
@@ -18,11 +17,16 @@ export const CartProvider = ({ children }) => {
     setCartItems((prevItems) => {
       const existingProduct = prevItems.find(item => item._id === product._id);
       if (existingProduct) {
-        return prevItems.map(item =>
-          item._id === product._id
-            ? { ...item, quantity: item.quantity + 1, totalPrice: (item.quantity + 1) * item.price }
-            : item
-        );
+        if (existingProduct.quantity < product.inventory) {
+          return prevItems.map(item =>
+            item._id === product._id
+              ? { ...item, quantity: item.quantity + 1, totalPrice: (item.quantity + 1) * item.price }
+              : item
+          );
+        } else {
+          toast.error(`Cannot add more than ${product.inventory} of ${product.name}`);
+          return prevItems;
+        }
       } else {
         return [...prevItems, { ...product, quantity: 1, totalPrice: product.price }];
       }
@@ -43,8 +47,12 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCartQuantity }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCartQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );

@@ -39,8 +39,10 @@ const Navbar = () => {
             <>
               <Link to="/" className="text-gray-700 hover:text-gray-900">Home</Link>
               <Link to="/products" className="text-gray-700 hover:text-gray-900">Products</Link>
-              <Link to="/contact" className="text-gray-700 hover:text-gray-900">Contact Us</Link>
               <Link to="/userProfile" className="text-gray-700 hover:text-gray-900">My Profile</Link>
+           <Link to="/order-summary" className="block text-gray-700 hover:text-gray-900 px-4 py-2">My Orders</Link>
+              <Link to="/contact" className="text-gray-700 hover:text-gray-900">Contact Us</Link>
+
               <Link to="/aboutUs" className="text-gray-700 hover:text-gray-900">About Us</Link>
               <div className="relative">
                 <button onClick={toggleCart} className="flex items-center relative text-gray-700 hover:text-gray-900">
@@ -63,8 +65,8 @@ const Navbar = () => {
           ) : admin ? (
             <>
               <Link to="/addproducts" className="text-gray-700 hover:text-gray-900">Add Products</Link>
-              <Link to="/adminUsers" className="text-gray-700 hover:text-gray-900">Manage Users</Link>
-              <Link to="/userOrder" className="text-gray-700 hover:text-gray-900">User Orders</Link>
+              <Link to="/user-management" className="text-gray-700 hover:text-gray-900">Manage Users</Link>
+              <Link to="/order-management" className="text-gray-700 hover:text-gray-900">User Orders</Link>
               <div className="relative">
                 <button onClick={toggleDropdown} className="user-initial  hover:text-gray-900">{admin.username.charAt(0).toUpperCase()}</button>
                 {dropdownOpen && (
@@ -91,8 +93,11 @@ const Navbar = () => {
               <>
                 <li><Link to="/" className="block text-gray-700 hover:text-gray-900 px-4 py-2">Home</Link></li>
                 <li><Link to="/products" className="block text-gray-700 hover:text-gray-900 px-4 py-2">Products</Link></li>
-                <li><Link to="/contact" className="block text-gray-700 hover:text-gray-900 px-4 py-2">Contact Us</Link></li>
+
                 <li><Link to="/userProfile" className="block text-gray-700 hover:text-gray-900 px-4 py-2">My Profile</Link></li>
+                <li><Link to="/order-summary" className="block text-gray-700 hover:text-gray-900 px-4 py-2">My Orders</Link></li>
+                <li><Link to="/contact" className="block text-gray-700 hover:text-gray-900 px-4 py-2">Contact Us</Link></li>
+
                 <li><Link to="/aboutUs" className="block text-gray-700 hover:text-gray-900 px-4 py-2">About Us</Link></li>
                 <li>
                   <button onClick={toggleCart} className="block text-gray-700 hover:text-gray-900 px-4 py-2">
@@ -108,8 +113,8 @@ const Navbar = () => {
             ) : admin ? (
               <>
                 <li><Link to="/addproducts" className="block text-gray-700 hover:text-gray-900 px-4 py-2">Add Products</Link></li>
-                <li><Link to="/adminUsers" className="block text-gray-700 hover:text-gray-900 px-4 py-2">Manage Users</Link></li>
-                <li><Link to="/userOrder" className="block text-gray-700 hover:text-gray-900 px-4 py-2">User Orders</Link></li>
+                <li><Link to="/user-management" className="block text-gray-700 hover:text-gray-900 px-4 py-2">Manage Users</Link></li>
+                <li><Link to="/order-management" className="block text-gray-700 hover:text-gray-900 px-4 py-2">User Orders</Link></li>
                 <li>
                   <span className="block  px-4 py-2">{admin.username.charAt(0).toUpperCase()}</span>
                   <button onClick={handleLogout} className="block text-gray-700 hover:text-gray-900 px-4 py-2">Logout</button>

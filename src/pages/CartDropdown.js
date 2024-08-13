@@ -30,7 +30,7 @@ const CartDropdown = () => {
             ))}
           </div>
           <div className="px-4 py-3 border-t border-gray-200">
-            <Link to="/checkout" className="block w-full checkout-link text-white text-center py-2 rounded mb-2 hover:bg-blue-600">
+            <Link to="/checkout" className="block w-full checkout-link text-white text-center py-2 rounded mb-2 ">
               Checkout
             </Link>
             <Link to="/checkout" className="block w-full text-center shopping-link hover:underline">

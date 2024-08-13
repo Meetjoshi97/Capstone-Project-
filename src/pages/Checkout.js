@@ -1,18 +1,99 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { CartContext } from './CartContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { useAuth } from '../components/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
-  const { cartItems, removeFromCart, updateCartQuantity } = useContext(CartContext);
+  const { cartItems, removeFromCart, updateCartQuantity, clearCart } = useContext(CartContext);
+  const paypalRef = useRef(null);
+  const [paypalLoaded, setPaypalLoaded] = useState(false);
+  const totalCost = cartItems.reduce((total, item) => total + item.totalPrice, 0);
+  const { user, login, loginAsAdmin } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadPaypalScript = async () => {
+      if (document.getElementById('paypal-sdk')) return;
+
+      const script = document.createElement('script');
+      script.id = 'paypal-sdk';
+      script.src = `https://www.paypal.com/sdk/js?client-id=ASEhYTa2ZNK7wKcXLkIqp1fB0wPQwSqMjgO8A_xMroOoG9nXJZ7gLDk9jTsxzl1g2DFU_fOX11B3Jeoz`;
+      script.onload = () => setPaypalLoaded(true);
+      script.onerror = (e) => console.error(`PayPal SDK failed to load: ${e.message}`);
+      document.body.appendChild(script);
+    };
+
+    loadPaypalScript();
+
+    return () => {
+      const script = document.getElementById('paypal-sdk');
+      if (script) {
+        script.remove();
+      }
+      if (paypalRef.current) {
+        paypalRef.current.innerHTML = '';
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (paypalLoaded && paypalRef.current && !paypalRef.current.hasChildNodes()) {
+      window.paypal.Buttons({
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: (totalCost + 10).toFixed(2) // Total cost including shipping
+              }
+            }]
+          });
+        },
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(details => {
+            toast.success('Transaction completed by ' + details.payer.name.given_name);
+            handleOrderCompletion(details);
+          });
+        },
+        onError: (err) => {
+          console.error('PayPal Button rendering error:', err);
+          toast.error('An error occurred during the transaction');
+        }
+      }).render(paypalRef.current);
+    }
+  }, [paypalLoaded, totalCost]);
+
+  const handleOrderCompletion = async (details) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/orders/create-order', { 
+        userId: user.id, 
+        cartItems, 
+        paymentStatus: 'Completed', 
+        paymentDetails: details 
+      });
+
+      // Clear the cart
+      clearCart();
+      navigate('/products');
+
+      // Optionally navigate to an order summary page
+      // history.push('/order-summary');
+    } catch (error) {
+      console.error('Error creating order:', error);
+      toast.error('Error creating order');
+    }
+  };
 
   const handleQuantityChange = (e, productId) => {
     const newQuantity = parseInt(e.target.value);
     updateCartQuantity(productId, newQuantity);
   };
 
-  const totalCost = cartItems.reduce((total, item) => total + item.totalPrice, 0);
-
   return (
-    <div className="container mx-auto mt-10">
+    <div className="checkout-container mx-auto mt-10">
+      <ToastContainer />
       <div className="sm:flex shadow-md my-10">
         <div className="w-full sm:w-3/4 bg-white px-10 py-10">
           <div className="flex justify-between border-b pb-8">
@@ -56,7 +137,6 @@ const Checkout = () => {
                         ))}
                       </select>
                     </div>
-               
                     <div className="flex items-center justify-between pt-5">
                       <div className="flex items-center">
                         <p className="text-xs leading-3 underline text-gray-800 cursor-pointer"></p>
@@ -115,9 +195,7 @@ const Checkout = () => {
                 <span>Total cost</span>
                 <span>${(totalCost + 10).toFixed(2)}</span>
               </div>
-              <button className="checkout-button font-semibold  py-3 text-sm text-white uppercase w-full">
-                Checkout
-              </button>
+              <div ref={paypalRef} id="paypal-button-container" className=" font-semibold py-3 text-sm text-white uppercase w-full"></div>
             </div>
           </div>
         )}
