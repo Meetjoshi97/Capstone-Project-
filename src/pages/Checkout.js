@@ -67,7 +67,7 @@ const Checkout = () => {
 
   const handleOrderCompletion = async (details) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/orders/create-order', { 
+      const response = await axios.post('https://capstone-project-shop-verse.onrender.com/api/orders/create-order', { 
         userId: user.id, 
         cartItems, 
         paymentStatus: 'Completed', 
