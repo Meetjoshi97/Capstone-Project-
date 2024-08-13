@@ -50,7 +50,7 @@ const UserPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('https://capstone-project-shop-verse.onrender.com/api/user/update', {
+    fetch('https://capstone-project-shop-verse.onrender.com/api/user/updateUserProfile', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
